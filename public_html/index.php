@@ -1,15 +1,23 @@
-<h1>Hello Cloudreach!</h1>
-<h4>Attempting MySQL connection from php...</h4>
-<?php
-$host = 'mysql';
-$user = 'root';
-$pass = 'rootpassword';
-$conn = new mysqli($host, $user, $pass);
 
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-} else {
-    echo "Connected to MySQL successfully!";
-}
+<br /><br /><a class="navLink" href="Login.php">Login</a>
+<h1>Formulaire d'inscription </h1>
 
-?>
+<Form action="register.php" method="POST">
+
+  <input type="text" name="firstname" id="inputs" placeholder="firstname"/>
+        <br /><br />
+  <input type="text" name="lastname" id="inputs" placeholder="lastname"/>
+        <br /><br />
+  <input type="text" name="email" id="inputs" placeholder="email" />
+        <br /><br />
+<input type="text" name="mobile" id="inputs" placeholder="mobile" />
+            <br /><br />
+  <input type="text" name="password" id="inputs" placeholder="password" />
+        <br /><br />
+  <input type="text" name="confirm_password" id="inputs" placeholder="confirm password" />
+        <br /><br />
+  <input id="submit" type="submit" value="Register" />
+        <br><br>
+        
+</Form>
+
