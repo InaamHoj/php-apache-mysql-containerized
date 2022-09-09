@@ -2,7 +2,8 @@
 include "Database.php";
 date_default_timezone_set('Europe/Istanbul');
 
-class Formule extends Database {
+
+class Product extends Database {
     private $id;
     private $name;
     private $code;
@@ -42,7 +43,7 @@ class Formule extends Database {
     }
 
     public function setCode($code) {
-        $this->code = $code;
+        $this->code = bin2hex(random_bytes('10'));
     }
 
     public function getDescription() {
@@ -73,5 +74,14 @@ class Formule extends Database {
     }
 
     public function findproduct(){
+        $query = $this->db->prepare("SELECT * FROM product");
+        $query->execute();
+        $allproducts = $query->fetchAll();
+
+        if (!isset($allproducts[0])) {
+            return false;
+        }
+        return $allproducts[0];
     }
+    
 }

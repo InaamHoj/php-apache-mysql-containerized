@@ -22,8 +22,10 @@ $user = $prospect->findprospect();
 
 if ((password_verify($password, $user["password"]))) {
     unset($user['password']); ///unset pour supprimer le password de la mémoire
-    $_SESSION["user"] = $user;
-    header("Location: welcomepage.php");
+    $_SESSION["user_id"] = $user["id"];
+    $_SESSION["user_firstName"] = $user["firstName"];
+    $_SESSION["user_lastName"] = $user["lastName"];
+    header("Location: index.php");
 } else {
     echo "<p>Email ou mot de passe incorrect</p>";
 }

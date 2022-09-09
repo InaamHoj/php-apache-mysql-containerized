@@ -1,84 +1,20 @@
-<?php
-include "Prospect.php";
+<h1>Formulaire d'inscription </h1>
 
-$firstname = $lastname = $email = $password = $confirm_password = $mobile = "";
-$firstname_err = $lastname_err = $email_err = $password_err = $confirm_password_err = $mobile_err = "";
+<Form action="registerverify.php" method="POST">
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-
-    if(empty(trim($_POST["firstname"]))){
-        $firstname_err = " please enter a first name ";
-    } else if(!preg_match('/^[a-zA-Z]+$/', trim($_POST['firstname']))){
-        $firstname_err = " firstname can only contain letters ";
-    }else {
-        $sql = "SELECT id FROM users WHERE firstname = ?";
-        $firstname = htmlspecialchars($_POST["firstname"]);
-    };
-
-    if(empty(trim($_POST["lastname"]))){
-        $lastname_err = "please enter a last name ";
-    } else if(!preg_match('/^[a-zA-Z]+$/', trim($_POST['lastname']))){
-        $lastname_err = "lastname can only contain letters";
-    }else {
-        $sql = "SELECT id FROM users WHERE lastname = ?";
-        $lastname = htmlspecialchars($_POST["lastname"]);
-    };
-
-    if(empty(trim($_POST["email"]))) {
-       $email_err = "please enter an email";
-    } else {
-        $email = htmlspecialchars($_POST["email"]);
-    }
-
-   if(empty(trim($_POST["password"]))){
-    $password_err = "Please enter a password";
-   } elseif(strlen(trim($_POST["password"])) < 6){
-    $password_err = "Password must have atleast 6 characters.";
-    } else{
-    $password = htmlspecialchars($_POST["password"]);
-    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-   }
-
-   if(empty(trim($_POST["confirm_password"]))){
-    $confirm_password_err = "Please confirm password.";
-} else{
-    $confirm_password = trim($_POST["confirm_password"]);
-    if(!empty($password_err) || ($password != $confirm_password)){
-        $confirm_password_err = "Password did not match.";
-    }
-}
-if(empty(trim($_POST["mobile"]))) {
-    $mobile_err = "please enter an mobile number";
- } else {
-     $mobile = htmlspecialchars($_POST["mobile"]);
- }
-
-}
-
-if (isset($confirm_password_err) && !empty($confirm_password_err)) {
-    echo $confirm_password_err;
-    die;
-}
-//Instancie la classe prospet
-$prospect = new Prospect();
-//on utilise les setters
-
-$prospect->setFirstName($firstname);
-$prospect->setLastName($lastname);
-$prospect->setMobile($mobile);
-$prospect->setEmail($email);
-$prospect->setPassword($password);
-$query = $prospect->addtodb();
-
-if(!$query){
-    var_dump($query->errorInfo());die;
-}
-
-if ($query == true) {
-    header("Location: login.php");
-}
-
-?>
-<body>
-    <p>An error has occured</p>
-</body>
+  <input type="text" name="firstname" id="inputs" placeholder="firstname"/>
+        <br /><br />
+  <input type="text" name="lastname" id="inputs" placeholder="lastname"/>
+        <br /><br />
+  <input type="text" name="email" id="inputs" placeholder="email" />
+        <br /><br />
+<input type="text" name="mobile" id="inputs" placeholder="mobile" />
+            <br /><br />
+  <input type="text" name="password" id="inputs" placeholder="password" />
+        <br /><br />
+  <input type="text" name="confirm_password" id="inputs" placeholder="confirm password" />
+        <br /><br />
+  <input id="submit" type="submit" value="Register" />
+        <br><br>
+        
+</Form>

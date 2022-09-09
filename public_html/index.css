@@ -1,0 +1,17 @@
+.container {
+  padding-top: 40px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+  margin-left: 145px;
+}
+
+.allproducts {
+  color: beige;
+  flex-direction: column;
+  background-color: rgba(35, 155, 164, 0.76);
+  border-radius: 5px;
+  padding: 25px;
+  font-family: "Rochester", sans-serif;
+  letter-spacing: 1px;
+}

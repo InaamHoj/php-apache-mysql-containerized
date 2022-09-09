@@ -77,9 +77,4 @@ class Formule extends Database {
         $this->updatedAt = $updatedAt;
     }
 
-    public function addformuletodb(){
-    }
-
-    public function findformule(){
-    }
 }
