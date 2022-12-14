@@ -76,6 +76,7 @@ if(!$query){
 
 if ($query == true) {
     header("Location: login.php");
+
 }
 
 ?>

@@ -26,8 +26,10 @@ $firstname = $user["firstName"];
 $lastname = $user["lastName"];
 
 $dbh = new PDO("mysql:dbname=dbtest;host=mysql", "root", "rootpassword");
-$query = $dbh->query("UPDATE prospect SET firstName='".$firstname."' WHERE id='".$id."'");
-
+$query = $dbh->query("UPDATE 'prospect' SET 'firstName'='".$firstname."' WHERE 'id'='".$id."'");
+$query->execute([$firstname]);
+$query->execute([$id]);
+$user = $query->fetch();
 } else echo "error";
 
 
