@@ -1,5 +1,5 @@
 <?php
-include "Prospect.php";
+include "connect.php";
 
 $firstname = $lastname = $email = $password = $confirm_password = $mobile = "";
 $firstname_err = $lastname_err = $email_err = $password_err = $confirm_password_err = $mobile_err = "";
@@ -59,27 +59,16 @@ if (isset($confirm_password_err) && !empty($confirm_password_err)) {
     echo $confirm_password_err;
     die;
 }
-//Instancie la classe prospet
-$prospect = new Prospect();
-//on utilise les setters
 
-$prospect->setFirstName($firstname);
-$prospect->setLastName($lastname);
-$prospect->setMobile($mobile);
-$prospect->setEmail($email);
-$prospect->setPassword($password);
-$query = $prospect->addtodb();
-
+$sql = "INSERT INTO prospect (firstName, lastName, email, password, mobile) VALUES (?,?,?,?,?)";
+$query = $db->prepare($sql);
+$query->execute([$firstName, $lastName, $email, $password, $mobile]);
+ 
 if(!$query){
     var_dump($query->errorInfo());die;
 }
 
 if ($query == true) {
     header("Location: login.php");
-
-}
-
-?>
-<body>
-    <p>An error has occured</p>
-</body>
+    echo "Please login to access the page";
+} 

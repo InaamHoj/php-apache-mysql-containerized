@@ -1,7 +1,6 @@
 <?php
 session_start();
-
-include("Prospect.php");
+require_once('connect.php');
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['useremail'];
@@ -14,10 +13,10 @@ if (!isset($_POST['useremail'], $_POST["userpassword"])) {
     echo 'Please fill both the username and password fields!';
 }
 
-// Instanciation de la classe prospect
-$prospect = new Prospect();
-$prospect->setEmail($email);
-$user = $prospect->findprospect();
+    $sql = "SELECT * from prospect where email='".$email."'";
+    $query = $db->prepare($sql);
+    $query->execute();
+    $user = $query->fetch();
 
 
 if ((password_verify($password, $user["password"]))) {

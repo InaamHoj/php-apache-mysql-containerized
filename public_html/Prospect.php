@@ -1,8 +1,8 @@
 <?php
-include "Database.php";
+include "connect.php";
 date_default_timezone_set('Europe/Istanbul');
 
-class Prospect extends Database {
+class Prospect {
     private $id;
     private $firstName;
     private $lastName;
@@ -101,15 +101,5 @@ class Prospect extends Database {
       return $query;
     }
 
-    public function findprospect(){
-        $query = $this->db->prepare("SELECT * from prospect where email='".$this->email."'");
-        //$query->bindParam($this->email);///attribu de la variable avec this
-        $query->execute();
-        $prospect = $query->fetchAll();
-
-        if (!isset($prospect[0])) {
-            return false;
-        }
-        return $prospect[0];
-    }
+    
 }
