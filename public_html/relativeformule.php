@@ -30,7 +30,10 @@ if(isset($_GET['id']) && !empty($_GET['id'])) {
 }
 ?>
 <a href="index.php"> Home</a>
-<a href="logout.php"> Logout</a>
+<?php
+    if ($_SESSION["user_id"]) { ?>
+    <a href="logout.php"> Logout</a>
+    <?php } ?>
 <h1> Nos produits </h1>
 <li> Name: <?= $allproducts["name"] ?> </li>
 <li> Description: <?= $allproducts["description"] ?> </li>
@@ -60,10 +63,21 @@ $relativeformule = $query->fetchAll(PDO::FETCH_ASSOC);
                 <td> <?= $relativeformule["formulename"] ?> </td>
                 <td> <?= $relativeformule["code"] ?> </td>
                 <td> <?= $relativeformule["tarif"] ?> </td>
+                <td>
+                <?php
+            if ($_SESSION["user_id"]) { ?>
+            <a href="editrelativeformule.php" class="btn btn-warning"> Edit </a>
+            <a href="deleterelativeformule.php" class="btn btn-danger"> Delete </a>
+            <?php } ?>
+            </td>
                 </tr>
                 <?php } ?>
             </tbody>
         </table>
+        <?php
+            if ($_SESSION["user_id"]) { ?>
+            <a href="addrelativeformule.php" class="btn btn-primary"> Add </a>
+            <?php } ?>
         </section>
     </div>
 </main>

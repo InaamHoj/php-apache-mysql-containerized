@@ -23,8 +23,9 @@ $result = $query->fetchAll(PDO::FETCH_ASSOC);
 <?php if (!isset($_SESSION["user_id"])) { ?>      
 <a class="navLink" href="Login.php">Login</a>
 <br /><br /><a class="navLink" href="register.php">Register</a>
-<?php }  ?>
-<?php if (isset($_SESSION["user_id"])) { ?>  
+<?php }  
+
+if (isset($_SESSION["user_id"])) { ?>  
 <a href="logout.php"> Logout</a>
 <div class="alert alert-success" role="alert">
   You are successfully logged in !
@@ -41,32 +42,45 @@ $result = $query->fetchAll(PDO::FETCH_ASSOC);
                    </div>';
                   $_SESSION['erreur'] = "";
              } ?>
+             <?php
+               if(!empty($_SESSION['message'])){ 
+                  echo '<div class="alert alert-success" role="alert">
+                   '. $_SESSION['message'].'
+                   </div>';
+                  $_SESSION['message'] = "";
+             } ?>
             <h1> Nos Produits </h1>
             <table class="table">
                   <thead>
                         <th> ID </th>      
                         <th> Name </th>
                         <th> Code </th>
+                        <th> Détails </th>
+                        <?php
+                         if ($_SESSION["user_id"]) { ?>
                         <th> Action </th>
+                        <?php } ?>
                   </thead>
                   <tbody>
-                  <?php 
+                        <?php
                         foreach ($result as $allproducts) { ?>
                         <tr>
                         <td> <?= $allproducts["id"] ?> </td>
                         <td> <?= $allproducts["name"] ?> </td>
                         <td> <?= $allproducts["code"] ?> </td>
                         <td> <a href="relativeformule.php?id=<?= $allproducts["id"]; ?>"> Voir détails</a></td> ?>
-                        </tr>
-                  <?php } ?> 
+                        <?php
+                         if ($_SESSION["user_id"]) { ?>
+                        <td> <a href="editproduct.php?id=<?= $allproducts["id"]; ?>" class="btn btn-warning"> Edit</a>
+                        <a href="deleteproduct.php?id=<?= $allproducts["id"]; ?>" class="btn btn-danger"> Delete</a>
+                         </tr>
+                       <?php } ?> 
+                       <?php } ?>
                   </tbody>
             </table>
-            <?php
-            if ($_SESSION["user_id"]) { ?>
             <a href="addproduct.php" class="btn btn-primary"> Add Product</a>
-            <?php } ?>
-</section>
-</div>
+            </section>
+      </div>
 </main>
 </body>
 </html>
