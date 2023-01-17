@@ -78,7 +78,10 @@ if (isset($_SESSION["user_id"])) { ?>
                        <?php } ?>
                   </tbody>
             </table>
+            <?php
+             if ($_SESSION["user_id"]) { ?>
             <a href="addproduct.php" class="btn btn-primary"> Add Product</a>
+            <?php } ?>
             </section>
       </div>
 </main>

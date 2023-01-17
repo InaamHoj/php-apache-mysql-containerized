@@ -2,11 +2,12 @@
 
 session_start();
 
-if ($_POST) {
+if (isset($_POST)) {
       if(isset($_POST["name"]) && !empty($_POST["name"])
       && isset($_POST["description"]) && !empty($_POST["description"])
-      && isset($_POST["code"]) && !empty($_POST["code"])) {
-            
+      && isset($_POST["code"]) && !empty($_POST["code"])) 
+      
+      {
             require_once('connect.php');
 
             $name = strip_tags($_POST["name"]);
