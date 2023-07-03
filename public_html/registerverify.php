@@ -63,6 +63,7 @@ if (isset($confirm_password_err) && !empty($confirm_password_err)) {
 $sql = "INSERT INTO prospect (firstName, lastName, email, password, mobile) VALUES (?,?,?,?,?)";
 $query = $db->prepare($sql);
 $query->execute([$firstName, $lastName, $email, $password, $mobile]);
+
  
 if(!$query){
     var_dump($query->errorInfo());die;

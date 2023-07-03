@@ -1,29 +1,22 @@
 <?php
-include "Database.php";
-date_default_timezone_set('Europe/Istanbul');
+namespace Adherant;
 
-class Adherant extends Database {
-    private $id;
-    private $prospectId;
-    private $numAdhesion;
-    private $firstName;
-    private $lastName;
-    private $mobile;
-    private $email;
-    private $createdAt;
-    private $updatedAt;
+class Adherant {
+    public $id;
+    // private $prospectId;
+    // private $numAdhesion;
+    // private $firstName;
+    // private $lastName;
+    // private $mobile;
+    // private $email;
+    // private $createdAt;
+    // private $updatedAt;
 
-    private $db = null;
 
-    public function __construct() {
-        $database = new Database();
-        $this->db = $database->connect();
-  
-          $this->setUpdatedAt(new \DateTime('now'));
-          if ($this->getCreatedAt() === null) {
-              $this->setCreatedAt($this->getUpdatedAt());
-          }
-      }
+    public function __construct($id) 
+    {
+        $this->id = rand();
+    }
 
       public function getId() {
         return $this->id;

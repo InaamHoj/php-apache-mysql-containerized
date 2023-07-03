@@ -68,6 +68,7 @@ $relativeformule = $query->fetchAll(PDO::FETCH_ASSOC);
             if ($_SESSION["user_id"]) { ?>
             <a href="editrelativeformule.php" class="btn btn-warning"> Edit </a>
             <a href="deleterelativeformule.php" class="btn btn-danger"> Delete </a>
+            <a href="Formuledetails.php?id=<?= $relativeformule["id"] ?>" class="btn btn-primary"> Formule Détaillée </a>
             <?php } ?>
             </td>
                 </tr>

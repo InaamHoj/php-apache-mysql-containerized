@@ -1,105 +1,77 @@
 <?php
-include "connect.php";
-date_default_timezone_set('Europe/Istanbul');
+
+session_start();
+require_once('connect.php');
+
+$sql = 'SELECT * FROM prospect';
+$query = $db->prepare($sql);
+$query->execute();
+$result = $query->fetchAll(PDO::FETCH_ASSOC);
 
 class Prospect {
-    private $id;
-    private $firstName;
-    private $lastName;
-    private $password;
-    private $mobile;
-    private $email;
-    private $createdAt;
-    private $updatedAt;
+    public $id;
+    public $firstName;
+    public $lastName;
+    public $password;
+    public $confirm_password;
+    public $mobile;
+    public $email;
 
-    private $db = null;
-
-    public function __construct() {
-      $database = new Database();
-      $this->db = $database->connect();
-
-        $this->setUpdatedAt(new \DateTime('now'));
-        if ($this->getCreatedAt() === null) {
-            $this->setCreatedAt($this->getUpdatedAt());
-        }
-
-    }
-
-
-    public function getId() {
-        return $this->id;
-    }
-
-    public function getFirstName() {
-        return $this->firstName;
-    }
-
-    public function setFirstName($firstName) {
+    public function __construct() 
+    {
+        $this->id = $id;
         $this->firstName = $firstName;
-    }
-
-    public function getLastName() {
-        return $this->lastName;
-    }
-
-    public function setLastName($lastName) {
         $this->lastName = $lastName;
-    }
-
-    public function getPassword() {
-        return $this->password;
-    }
-
-    public function setPassword($password) {
         $this->password = password_hash($password, PASSWORD_DEFAULT);
-    }
-
-    public function getMobile() {
-        return $this->mobile;
-    }
-
-    public function setMobile($mobile) {
+        $this->confirm_password = $confirm_password;
         $this->mobile = $mobile;
-    }
-
-    public function getEmail() {
-        return $this->email;
-    }
-
-    public function setEmail($email) {
         $this->email = $email;
-    }
-
-    public function getCreatedAt() {
-        return $this->createdAt;
-    }
-
-    public function setCreatedAt($createdAt) {
-        $this->createdAt = $createdAt;
-    }
-
-    public function getUpdatedAt() {
-        return $this->updatedAt;
-    }
-
-    public function setUpdatedAt($updatedAt) {
-        $this->updatedAt = $updatedAt;
-    }
-
-    public function addtodb(){
-
-      $query = $this->db->prepare("INSERT INTO prospect (firstName, lastName, email, password, mobile, createdAt, updatedAt) VALUES (?,?,?,?,?,?,?)");
-      $query->execute([
-          $this->firstName,
-          $this->lastName,
-          $this->email,
-          $this->password,
-          $this->mobile,
-          $this->createdAt->format('Y-m-d'),
-          $this->updatedAt->format('Y-m-d')
-      ]);
-      return $query;
-    }
-
     
-}
+    }   
+}  
+
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+      <meta charset="UTF-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Document</title>
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+</head>
+<body>
+<?php if (!isset($_SESSION["user_id"])) { ?>      
+<a class="navLink" href="Login.php">Login</a>
+<br /><br /><a class="navLink" href="register.php">Register</a>
+<?php }  
+
+
+    ?>
+    <h1> Liste de prospects </h1>
+            <table class="table">
+                  <thead>
+                        <th> Prenom </th>      
+                        <th> Nom </th>
+                        <th> Telephone </th>
+                        <th> Email </th>
+                  </thead>
+                  <tbody>
+                        <?php
+                        foreach ($result as $allprospects) { ?>
+                        <tr>
+                        <td> <?= $allprospects["firstName"] ?> </td>
+                        <td> <?= $allprospects["lastName"] ?> </td>
+                        <td> <?= $allprospects["mobile"] ?> </td>
+                        <td> <?= $allprospects["email"] ?> </td> ?>
+                        <?php
+                         if ($_SESSION["user_id"]) { ?>
+                        <td> <a href="editproduct.php?id=<?= $allproducts["id"]; ?>" class="btn btn-warning"> Edit</a>
+                        <a href="deleteproduct.php?id=<?= $allproducts["id"]; ?>" class="btn btn-danger"> Delete</a>
+                         </tr>
+                       <?php } ?> 
+                       <?php } ?>
+                  </tbody>
+            </table>
+    
